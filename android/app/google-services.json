@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "715558494528",
+    "firebase_url": "https://flash-chat-26a01.firebaseio.com",
+    "project_id": "flash-chat-26a01",
+    "storage_bucket": "flash-chat-26a01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715558494528:android:970fe3e62e395fbc4b9aa5",
+        "android_client_info": {
+          "package_name": "com.zikozee.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715558494528-35ckbf303uvdgcukp1ehenbv3betktiu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_dfj2oAhgISYzGMGMG7CaAFGrxjaD7MU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715558494528-35ckbf303uvdgcukp1ehenbv3betktiu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

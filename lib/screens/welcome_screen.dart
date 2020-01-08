@@ -40,7 +40,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
     controller.addListener(() {
       setState(() {}); // jez calling it will do the work
-      print(animation.value);
+//      print(animation.value);
     });
   }
 
@@ -66,7 +66,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: 60.0,// commented animation could be used here
+                    height: 60.0, // commented animation could be used here
                   ),
                 ),
                 TypewriterAnimatedTextKit(
