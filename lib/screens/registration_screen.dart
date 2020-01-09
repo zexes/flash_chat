@@ -65,14 +65,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             RoundedButton(
               color: Colors.blueAccent,
               onPressed: () async {
+                String authError;
                 try {
+                  print(email);
                   final newUser = await _auth.createUserWithEmailAndPassword(
-                      email: email, password: password);
+                      email: email.trim(), password: password);
                   if (newUser != null) {
                     Navigator.pushNamed(context, ChatScreen.id);
                   }
                 } catch (e) {
                   print(e);
+                  switch (e.code) {
+                    case 'ERROR_INVALID_EMAIL':
+                      authError = 'Invalid Email';
+                      break;
+                    case 'ERROR_USER_NOT_FOUND':
+                      authError = 'User Not Found';
+                      break;
+                    case 'ERROR_WRONG_PASSWORD':
+                      authError = 'Wrong Password';
+                      break;
+                    case 'ERROR_NETWORK_REQUEST_FAILED':
+                      authError = 'network request failed';
+                      break;
+                    default:
+                      authError =
+                          'An error occured kindly restart app and try again';
+                      break;
+                  }
+                  print(authError);
                 }
               },
               title: 'Register',
