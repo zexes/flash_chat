@@ -156,6 +156,7 @@ class MessagesStream extends StatelessWidget {
         return Expanded(
           //so as not cover the send button
           child: ListView(
+            reverse: true,
             padding: EdgeInsets.symmetric(
                 horizontal: 10.0, vertical: 20.0), // enable scrolling
             children: messagesBubbles,
