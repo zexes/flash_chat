@@ -138,7 +138,7 @@ class MessagesStream extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data.documents;
+        final messages = snapshot.data.documents.reversed;
         for (var message in messages) {
           final messageText = message.data['text'];
           final messageSender = message.data['sender'];
