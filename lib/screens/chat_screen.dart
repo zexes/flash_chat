@@ -101,6 +101,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       _fireStore.collection('messages').add({
                         'text': messageText,
                         'sender': loggedInUser.email,
+                        'time': FieldValue.serverTimestamp(),
                       });
                     },
                     child: Text(
@@ -122,11 +123,14 @@ class MessagesStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _fireStore.collection('messages').snapshots(),
+      stream: _fireStore
+          .collection('messages')
+          .orderBy('time', descending: true)
+          .snapshots(),
       builder: (context, snapshot) {
         List<MessageBubble> messagesBubbles = [];
 
-        // when no data available no need add inAsyncCall to
+        // when no data available no need add inAsyncCall  to
         // CircularProgressIndicator which we control because
         // once data is available StreamBuilder rebuilds itself as
         // documentation says and hence CircularProgressIndicator is
@@ -138,7 +142,7 @@ class MessagesStream extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data.documents.reversed;
+        final messages = snapshot.data.documents;
         for (var message in messages) {
           final messageText = message.data['text'];
           final messageSender = message.data['sender'];
