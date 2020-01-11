@@ -101,9 +101,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         'time': FieldValue.serverTimestamp(),
                       });
                     },
-                    child: Text(
-                      'Send',
-                      style: kSendButtonTextStyle,
+                    child: IconButton(
+                      icon: Icon(Icons.send),
+                      onPressed: () {},
+                      color: Colors.lightBlueAccent,
                     ),
                   ),
                 ],
