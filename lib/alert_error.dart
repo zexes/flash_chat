@@ -7,11 +7,11 @@ import 'package:flutter/widgets.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class AlertAndError {
-  static void alertButton(
-      BuildContext context, String title, String description) {
+  static void alertButton(AlertType alertType, BuildContext context,
+      String title, String description) {
     Alert(
       context: context,
-      type: AlertType.error,
+      type: alertType,
       title: title,
       desc: description,
       buttons: [
@@ -35,17 +35,17 @@ class AlertAndError {
         case 'Error 17011':
           authError = 'User Not Found';
           errorMessage = e.message;
-          alertButton(context, authError, errorMessage);
+          alertButton(AlertType.error, context, authError, errorMessage);
           break;
         case 'Error 17009':
           authError = 'Password Not Valid';
           errorMessage = e.message;
-          alertButton(context, authError, errorMessage);
+          alertButton(AlertType.error, context, authError, errorMessage);
           break;
         case 'Error 17020':
           authError = 'Network Error';
           errorMessage = e.message;
-          alertButton(context, authError, errorMessage);
+          alertButton(AlertType.error, context, authError, errorMessage);
           break;
         default:
           print('Case ${e.message} is not just implemented');
@@ -56,31 +56,31 @@ class AlertAndError {
           authError = 'Invalid Email';
           errorMessage = e.message;
           print('$authError  ===== $errorMessage');
-          alertButton(context, authError, errorMessage);
+          alertButton(AlertType.error, context, authError, errorMessage);
           break;
         case 'ERROR_USER_NOT_FOUND':
           authError = 'User Not Found';
           errorMessage = e.message;
           print('$authError  ===== $errorMessage');
-          alertButton(context, authError, errorMessage);
+          alertButton(AlertType.error, context, authError, errorMessage);
           break;
         case 'ERROR_WRONG_PASSWORD':
           authError = 'Wrong Password';
           errorMessage = e.message;
           print('$authError  ===== $errorMessage');
-          alertButton(context, authError, errorMessage);
+          alertButton(AlertType.error, context, authError, errorMessage);
           break;
         case 'ERROR_NETWORK_REQUEST_FAILED':
           authError = 'Network error';
           errorMessage = e.message;
           print('$authError  ===== $errorMessage');
-          alertButton(context, authError, errorMessage);
+          alertButton(AlertType.error, context, authError, errorMessage);
           break;
         default:
           authError = 'Error';
           errorMessage = e.message;
           print('$authError  ===== $errorMessage');
-          alertButton(context, authError, errorMessage);
+          alertButton(AlertType.error, context, authError, errorMessage);
           break;
       }
     }
