@@ -55,32 +55,28 @@ class AlertAndError {
         case 'ERROR_INVALID_EMAIL':
           authError = 'Invalid Email';
           errorMessage = e.message;
-          print('$authError  ===== $errorMessage');
           alertButton(AlertType.error, context, authError, errorMessage);
           break;
         case 'ERROR_USER_NOT_FOUND':
           authError = 'User Not Found';
           errorMessage = e.message;
-          print('$authError  ===== $errorMessage');
           alertButton(AlertType.error, context, authError, errorMessage);
           break;
         case 'ERROR_WRONG_PASSWORD':
           authError = 'Wrong Password';
           errorMessage = e.message;
-          print('$authError  ===== $errorMessage');
           alertButton(AlertType.error, context, authError, errorMessage);
           break;
         case 'ERROR_NETWORK_REQUEST_FAILED':
           authError = 'Network error';
           errorMessage = e.message;
-          print('$authError  ===== $errorMessage');
           alertButton(AlertType.error, context, authError, errorMessage);
           break;
         default:
           authError = 'Error';
           errorMessage = e.message;
-          print('$authError  ===== $errorMessage');
-          alertButton(AlertType.error, context, authError, errorMessage);
+          alertButton(AlertType.error, context, authError,
+              'Something went wrong otherwise check your login credentials');
           break;
       }
     }

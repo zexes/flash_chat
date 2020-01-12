@@ -99,6 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (email == null || password == null) {
                     AlertAndError.alertButton(AlertType.warning, context,
                         'Wrong format', 'Email or Password is empty');
+                    return;
                   }
                   signIn();
                 },
