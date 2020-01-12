@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void signIn() async {
     try {
       final user = await _auth.signInWithEmailAndPassword(
-        email: email.trim(),
+        email: email,
         password: password,
       );
       if (user != null) {
@@ -96,6 +96,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   setState(() {
                     showSpinner = true;
                   });
+                  if (email == null || password == null) {
+                    AlertAndError.alertButton(AlertType.warning, context,
+                        'Wrong format', 'Email or Password is empty');
+                  }
                   signIn();
                 },
                 title: 'Log in',
