@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/alert_error.dart';
 import 'package:flash_chat/component/rounded_button.dart';
-import 'package:flash_chat/screens/chat_screen.dart';
-import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -22,6 +20,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool showSpinner = false;
   String email;
   String password;
+  String confirmPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +68,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     hintText: 'Enter your password'),
               ),
               SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                obscureText: true,
+                textAlign: TextAlign.center,
+                onChanged: (value) {
+                  confirmPassword = value;
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                    hintText: 'Confirm your password'),
+              ),
+              SizedBox(
                 height: 24.0,
               ),
               RoundedButton(
@@ -77,6 +88,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   setState(() {
                     showSpinner = true;
                   });
+                  if (password != confirmPassword) {
+                    AlertAndError.alertRegistration(AlertType.error, context,
+                        'Password Check', 'Password does not match');
+                    showSpinner = false;
+                    return;
+                  }
                   try {
                     print(email);
                     final newUser = await _auth.createUserWithEmailAndPassword(

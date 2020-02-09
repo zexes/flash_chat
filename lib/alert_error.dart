@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flash_chat/screens/login_screen.dart';
+import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -21,6 +22,27 @@ class AlertAndError {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           onPressed: () => Navigator.pushNamed(context, LoginScreen.id),
+          width: 120,
+        )
+      ],
+    ).show();
+  }
+
+  // to go back to registration screen
+  static void alertRegistration(AlertType alertType, BuildContext context,
+      String title, String description) {
+    Alert(
+      context: context,
+      type: alertType,
+      title: title,
+      desc: description,
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Ok",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pushNamed(context, RegistrationScreen.id),
           width: 120,
         )
       ],
