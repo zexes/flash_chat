@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+import '../alert_error.dart';
 
 final _fireStore = Firestore.instance;
 FirebaseUser loggedInUser;
@@ -30,6 +33,11 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<bool> onBackPress() {
+    return AlertAndError.alertButtonCloseCurrentScreen(AlertType.warning,
+        context, "ARE YOU SURE ", "Do you want to close the curent screen");
+  }
+
+  Future<bool> onBackPressEmoji() {
     if (isShowSticker) {
       setState(() {
         isShowSticker = false;
@@ -53,80 +61,83 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: null,
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                _auth.signOut();
-                Navigator.pop(context);
-              }),
-        ],
-        title: Text('⚡️Chat'),
-        backgroundColor: Colors.lightBlueAccent,
-      ),
-      body: SafeArea(
-        child: WillPopScope(
-          child: Stack(
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  MessagesStream(),
-                  Container(
-                    decoration: kMessageContainerDecoration,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Material(
-                          child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 1.0),
-                            child: IconButton(
-                              icon: Icon(Icons.face),
-                              onPressed: () {
-                                setState(() {
-                                  isShowSticker = !isShowSticker;
-                                });
+    return WillPopScope(
+      onWillPop: onBackPress,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: null,
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  _auth.signOut();
+                  Navigator.pop(context);
+                }),
+          ],
+          title: Text('⚡️Chat'),
+          backgroundColor: Colors.lightBlueAccent,
+        ),
+        body: SafeArea(
+          child: WillPopScope(
+            child: Stack(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    MessagesStream(),
+                    Container(
+                      decoration: kMessageContainerDecoration,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Material(
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 1.0),
+                              child: IconButton(
+                                icon: Icon(Icons.face),
+                                onPressed: () {
+                                  setState(() {
+                                    isShowSticker = !isShowSticker;
+                                  });
+                                },
+                                color: Colors.blueGrey,
+                              ),
+                            ),
+                            color: Colors.white,
+                          ),
+                          Expanded(
+                            child: TextField(
+                              controller: messageTextController,
+                              onChanged: (value) {
+                                messageText = value;
                               },
-                              color: Colors.blueGrey,
+                              decoration: kMessageTextFieldDecoration,
                             ),
                           ),
-                          color: Colors.white,
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: messageTextController,
-                            onChanged: (value) {
-                              messageText = value;
+                          IconButton(
+                            icon: Icon(Icons.send),
+                            onPressed: () {
+                              print('am here');
+                              messageTextController.clear();
+                              _fireStore.collection('messages').add({
+                                'text': messageText,
+                                'sender': loggedInUser.email,
+                                'time': FieldValue.serverTimestamp(),
+                              });
                             },
-                            decoration: kMessageTextFieldDecoration,
+                            color: Colors.lightBlueAccent,
                           ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.send),
-                          onPressed: () {
-                            print('am here');
-                            messageTextController.clear();
-                            _fireStore.collection('messages').add({
-                              'text': messageText,
-                              'sender': loggedInUser.email,
-                              'time': FieldValue.serverTimestamp(),
-                            });
-                          },
-                          color: Colors.lightBlueAccent,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  (isShowSticker ? buildSticker() : Container()),
-                ],
-              ),
-            ],
+                    (isShowSticker ? buildSticker() : Container()),
+                  ],
+                ),
+              ],
+            ),
+            onWillPop: onBackPressEmoji,
           ),
-          onWillPop: onBackPress,
         ),
       ),
     );

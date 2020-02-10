@@ -3,6 +3,9 @@ import 'package:flash_chat/component/rounded_button.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+import '../alert_error.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'welcome_screen';
@@ -50,52 +53,60 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     super.dispose();
   }
 
+  Future<bool> onBackPress() {
+    return AlertAndError.alertButtonCloseCurrentScreen(AlertType.warning,
+        context, "ARE YOU SURE ", "Do you want to exit the App");
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: animation.value,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Hero(
-                  tag: 'logo',
-                  child: Container(
-                    child: Image.asset('images/logo.png'),
-                    height: 60.0, // commented animation could be used here
+    return WillPopScope(
+      onWillPop: onBackPress,
+      child: Scaffold(
+        backgroundColor: animation.value,
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Hero(
+                    tag: 'logo',
+                    child: Container(
+                      child: Image.asset('images/logo.png'),
+                      height: 60.0, // commented animation could be used here
+                    ),
                   ),
-                ),
-                TypewriterAnimatedTextKit(
-                  text: ['Flash Chat'],
-                  textStyle: TextStyle(
-                    fontSize: 45.0,
-                    fontWeight: FontWeight.w900,
+                  TypewriterAnimatedTextKit(
+                    text: ['Flash Chat'],
+                    textStyle: TextStyle(
+                      fontSize: 45.0,
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 48.0,
-            ),
-            RoundedButton(
-              color: Colors.lightBlueAccent,
-              onPressed: () {
-                Navigator.pushNamed(context, LoginScreen.id);
-              },
-              title: 'Log In',
-            ),
-            RoundedButton(
-              color: Colors.blueAccent,
-              onPressed: () {
-                Navigator.pushNamed(context, RegistrationScreen.id);
-              },
-              title: 'Register',
-            ),
-          ],
+                ],
+              ),
+              SizedBox(
+                height: 48.0,
+              ),
+              RoundedButton(
+                color: Colors.lightBlueAccent,
+                onPressed: () {
+                  Navigator.pushNamed(context, LoginScreen.id);
+                },
+                title: 'Log In',
+              ),
+              RoundedButton(
+                color: Colors.blueAccent,
+                onPressed: () {
+                  Navigator.pushNamed(context, RegistrationScreen.id);
+                },
+                title: 'Register',
+              ),
+            ],
+          ),
         ),
       ),
     );

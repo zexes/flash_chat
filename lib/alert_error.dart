@@ -25,6 +25,35 @@ class AlertAndError {
     ).show();
   }
 
+  static Future<bool> alertButtonCloseCurrentScreen(AlertType alertType,
+      BuildContext context, String title, String description) {
+    return Alert(
+          context: context,
+          type: alertType, //AlertType.warning,
+          title: title, //"ARE YOU SURE",
+          desc: description, //"Do you want to close the curent screen",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "YES",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.of(context).pop(true),
+              color: Colors.red,
+            ),
+            DialogButton(
+              child: Text(
+                "NO",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.of(context).pop(false),
+              color: Color.fromRGBO(0, 179, 134, 1.0),
+            )
+          ],
+        ).show() ??
+        false;
+  }
+
   static void errorHandler(PlatformException e, BuildContext context) {
     if (Platform.isIOS) {
       switch (e.code) {

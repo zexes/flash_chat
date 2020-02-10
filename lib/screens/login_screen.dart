@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/alert_error.dart';
 import 'package:flash_chat/component/rounded_button.dart';
