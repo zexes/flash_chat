@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/alert_error.dart';
 import 'package:flash_chat/component/rounded_button.dart';
+import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -89,8 +90,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     showSpinner = true;
                   });
                   if (password != confirmPassword) {
-                    AlertAndError.alertRegistration(AlertType.error, context,
-                        'Password Check', 'Password does not match');
+                    AlertAndError.alertButton(
+                        AlertType.error,
+                        context,
+                        'Password Check',
+                        'Password does not match',
+                        RegistrationScreen.id);
                     showSpinner = false;
                     return;
                   }
@@ -99,8 +104,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email.trim(), password: password);
                     if (newUser != null) {
-                      AlertAndError.alertButton(AlertType.success, context,
-                          'Registration', 'Registration Successful');
+                      AlertAndError.alertButton(
+                          AlertType.success,
+                          context,
+                          'Registration',
+                          'Registration Successful',
+                          LoginScreen.id);
                     }
 
                     setState(() {
