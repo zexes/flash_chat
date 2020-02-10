@@ -89,7 +89,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 ],
               ),
               SizedBox(
-                height: 48.0,
+                height: 30.0,
               ),
               RoundedButton(
                 color: Colors.lightBlueAccent,
@@ -105,6 +105,12 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 },
                 title: 'Register',
               ),
+              SizedBox(
+                height: 30.0,
+              ),
+              Row(
+                children: <Widget>[],
+              )
             ],
           ),
         ),

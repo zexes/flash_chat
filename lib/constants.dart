@@ -33,3 +33,6 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+
+const kLoginText = TextStyle(
+    fontSize: 18.0, color: Colors.blueAccent, fontStyle: FontStyle.italic);

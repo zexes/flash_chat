@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/alert_error.dart';
+import 'package:flash_chat/authentication/auth.dart';
 import 'package:flash_chat/component/rounded_button.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -99,25 +100,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     showSpinner = false;
                     return;
                   }
-                  try {
-                    print(email);
-                    final newUser = await _auth.createUserWithEmailAndPassword(
-                        email: email.trim(), password: password);
-                    if (newUser != null) {
-                      AlertAndError.alertButton(
-                          AlertType.success,
-                          context,
-                          'Registration',
-                          'Registration Successful',
-                          LoginScreen.id);
-                    }
-
-                    setState(() {
-                      showSpinner = false;
-                    });
-                  } catch (e) {
-                    print(e);
-                  }
+                  bool spinnerFlag =
+                      await Auth().signUp(email, password, context);
+                  AlertAndError.alertButton(
+                      AlertType.success,
+                      context,
+                      'Registration',
+                      'Registration Successful',
+                      LoginScreen.id);
+                  setState(() {
+                    showSpinner = !spinnerFlag;
+                  });
                 },
                 title: 'Register',
               )

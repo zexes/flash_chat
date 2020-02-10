@@ -1,13 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/alert_error.dart';
+import 'package:flash_chat/authentication/auth.dart';
 import 'package:flash_chat/component/rounded_button.dart';
-import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-
 import '../constants.dart';
+import 'registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'login_screen';
@@ -17,28 +16,27 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _auth = FirebaseAuth.instance;
-
   bool showSpinner = false;
   String email;
   String password;
 
-  void signIn() async {
-    try {
-      final user = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      if (user != null) {
-        Navigator.pushNamed(context, ChatScreen.id);
-      }
-      setState(() {
-        showSpinner = false;
-      });
-    } on PlatformException catch (e) {
-      AlertAndError.errorHandler(e, context);
-    }
-  }
+//  void signIn() async {
+//    try {
+//      final user = await _auth.signInWithEmailAndPassword(
+//        email: email,
+//        password: password,
+//      );
+//      if (user != null) {
+//        Navigator.pushNamed(context, ChatScreen.id);
+//      }
+//      setState(() {
+//        showSpinner = false;
+//      });
+//    } on PlatformException catch (e) {
+//      AlertAndError.errorHandler(e, context);
+//    }
+//
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(
-                height: 48.0,
+                height: 30.0,
               ),
               TextField(
                 keyboardType: TextInputType.emailAddress,
@@ -90,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               RoundedButton(
                 color: Colors.lightBlueAccent,
-                onPressed: () {
+                onPressed: () async {
                   setState(() {
                     showSpinner = true;
                   });
@@ -103,10 +101,40 @@ class _LoginScreenState extends State<LoginScreen> {
                         LoginScreen.id);
                     return;
                   }
-                  signIn();
+//                  signIn();
+                  bool spinnerOpp =
+                      await Auth().signIn(email, password, context);
+
+                  setState(() {
+                    showSpinner = !spinnerOpp;
+                  });
                 },
                 title: 'Log in',
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      'Forgot Password',
+                      style: kLoginText,
+                    ),
+                    onPressed: () {},
+                  ),
+                  SizedBox(
+                    width: 30.0,
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'Sign Up/Register',
+                      style: kLoginText,
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, RegistrationScreen.id);
+                    },
+                  )
+                ],
+              )
             ],
           ),
         ),

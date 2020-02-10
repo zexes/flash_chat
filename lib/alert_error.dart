@@ -7,6 +7,26 @@ import 'package:flutter/widgets.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class AlertAndError {
+  static void alertOK(AlertType alertType, BuildContext context, String title,
+      String description) {
+    Alert(
+      context: context,
+      type: alertType,
+      title: title,
+      desc: description,
+      buttons: [
+        DialogButton(
+          child:
+              Text("Ok", style: TextStyle(color: Colors.white, fontSize: 20)),
+          onPressed: () {
+            print('yooo');
+          },
+          width: 120,
+        )
+      ],
+    ).show();
+  }
+
   static void alertButton(AlertType alertType, BuildContext context,
       String title, String description, String screen) {
     Alert(

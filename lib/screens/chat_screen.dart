@@ -1,5 +1,6 @@
 import 'package:emoji_picker/emoji_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/authentication/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -51,7 +52,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void getCurrentUser() async {
     try {
-      final user = await _auth.currentUser();
+      final user = await Auth().currentUser();
       if (user != null) {
         loggedInUser = user;
         print(loggedInUser.email);
@@ -70,8 +71,7 @@ class _ChatScreenState extends State<ChatScreen> {
             IconButton(
                 icon: Icon(Icons.close),
                 onPressed: () {
-                  _auth.signOut();
-                  Navigator.pop(context);
+                  Auth().signOut(context);
                 }),
           ],
           title: Text('⚡️Chat'),
