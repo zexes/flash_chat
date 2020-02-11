@@ -2,11 +2,11 @@ import 'package:emoji_picker/emoji_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/authentication/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flash_chat/constants.dart';
+import 'package:flash_chat/utility/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import '../alert_error.dart';
+import '../utility/alert_error.dart';
 
 final _fireStore = Firestore.instance;
 FirebaseUser loggedInUser;
@@ -20,7 +20,6 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
-  final _auth = FirebaseAuth.instance;
 
   String messageText;
   bool isShowSticker;

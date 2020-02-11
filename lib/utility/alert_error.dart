@@ -7,26 +7,6 @@ import 'package:flutter/widgets.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class AlertAndError {
-  static void alertOK(AlertType alertType, BuildContext context, String title,
-      String description) {
-    Alert(
-      context: context,
-      type: alertType,
-      title: title,
-      desc: description,
-      buttons: [
-        DialogButton(
-          child:
-              Text("Ok", style: TextStyle(color: Colors.white, fontSize: 20)),
-          onPressed: () {
-            print('yooo');
-          },
-          width: 120,
-        )
-      ],
-    ).show();
-  }
-
   static void alertButton(AlertType alertType, BuildContext context,
       String title, String description, String screen) {
     Alert(
@@ -74,20 +54,21 @@ class AlertAndError {
         false;
   }
 
-  static void errorHandler(PlatformException e, BuildContext context) {
+  static void errorHandler(
+      PlatformException e, BuildContext context, String screen) {
     if (Platform.isIOS) {
       switch (e.code) {
         case 'Error 17011':
-          alertButton(AlertType.error, context, 'User Not Found', e.message,
-              LoginScreen.id);
+          alertButton(
+              AlertType.error, context, 'User Not Found', e.message, screen);
           break;
         case 'Error 17009':
           alertButton(AlertType.error, context, 'Password Not Valid', e.message,
-              LoginScreen.id);
+              screen);
           break;
         case 'Error 17020':
-          alertButton(AlertType.error, context, 'Network Error', e.message,
-              LoginScreen.id);
+          alertButton(
+              AlertType.error, context, 'Network Error', e.message, screen);
           break;
         default:
           print('Case ${e.message} is not just implemented');
@@ -95,26 +76,29 @@ class AlertAndError {
     } else {
       switch (e.code) {
         case 'ERROR_INVALID_EMAIL':
-          alertButton(AlertType.error, context, 'Invalid Email', e.message,
-              LoginScreen.id);
+          alertButton(
+              AlertType.error, context, 'Invalid Email', e.message, screen);
           break;
         case 'ERROR_USER_NOT_FOUND':
-          alertButton(AlertType.error, context, 'User Not Found', e.message,
-              LoginScreen.id);
+          alertButton(
+              AlertType.error, context, 'User Not Found', e.message, screen);
           break;
         case 'ERROR_WRONG_PASSWORD':
-          alertButton(AlertType.error, context, 'Wrong Password', e.message,
-              LoginScreen.id);
+          alertButton(
+              AlertType.error, context, 'Wrong Password', e.message, screen);
           break;
         case 'ERROR_NETWORK_REQUEST_FAILED':
-          alertButton(AlertType.error, context, 'Network error', e.message,
-              LoginScreen.id);
+          alertButton(
+              AlertType.error, context, 'Network error', e.message, screen);
           break;
         default:
-          alertButton(
-              AlertType.error, context, 'Error', e.message, LoginScreen.id);
+          alertButton(AlertType.error, context, 'Error', e.message, screen);
           break;
       }
     }
+  }
+
+  static void generalError(Exception e, BuildContext context, String screen) {
+    alertButton(AlertType.error, context, 'Error', e.toString(), screen);
   }
 }

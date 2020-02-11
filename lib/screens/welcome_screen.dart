@@ -5,7 +5,7 @@ import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import '../alert_error.dart';
+import '../utility/alert_error.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'welcome_screen';

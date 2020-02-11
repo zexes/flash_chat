@@ -1,11 +1,12 @@
-import 'package:flash_chat/alert_error.dart';
+import 'package:flash_chat/utility/alert_error.dart';
 import 'package:flash_chat/authentication/auth.dart';
 import 'package:flash_chat/component/rounded_button.dart';
+import 'package:flash_chat/screens/password_reset.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import '../constants.dart';
+import '../utility/constants.dart';
 import 'registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -102,8 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     return;
                   }
 //                  signIn();
-                  bool spinnerOpp =
-                      await Auth().signIn(email, password, context);
+                  bool spinnerOpp = await Auth()
+                      .signIn(email, password, context, LoginScreen.id);
 
                   setState(() {
                     showSpinner = !spinnerOpp;
@@ -119,7 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       'Forgot Password',
                       style: kLoginText,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, PasswordResetScreen.id);
+                    },
                   ),
                   SizedBox(
                     width: 30.0,

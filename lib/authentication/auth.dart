@@ -2,17 +2,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import '../alert_error.dart';
+import '../utility/alert_error.dart';
 import 'base_auth.dart';
 
 class Auth implements BaseAuth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  Future<bool> signIn(
-      String email, String password, BuildContext context) async {
+  Future<bool> signIn(String email, String password, BuildContext context,
+      String screen) async {
     try {
       final user = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -20,8 +21,6 @@ class Auth implements BaseAuth {
       );
       if (user != null) {
         if (user.user.isEmailVerified) {
-          AlertAndError.alertButton(AlertType.success, context, "LOGIN",
-              "Login successful", LoginScreen.id);
           Navigator.pushNamed(context, ChatScreen.id);
         } else {
           AlertAndError.alertButton(AlertType.info, context, "VERIFY EMAIL",
@@ -29,8 +28,11 @@ class Auth implements BaseAuth {
         }
       }
       return true;
+    } on PlatformException catch (e) {
+      AlertAndError.errorHandler(e, context, screen);
+      return false;
     } catch (e) {
-      AlertAndError.errorHandler(e, context);
+      AlertAndError.generalError(e, context, screen);
       return false;
     }
   }
@@ -42,8 +44,8 @@ class Auth implements BaseAuth {
   }
 
   @override
-  Future<bool> signUp(
-      String email, String password, BuildContext context) async {
+  Future<bool> signUp(String email, String password, BuildContext context,
+      String screen) async {
     try {
       final newUser = await _auth.createUserWithEmailAndPassword(
           email: email.trim(), password: password);
@@ -52,8 +54,11 @@ class Auth implements BaseAuth {
         return true;
       }
       return true;
+    } on PlatformException catch (e) {
+      AlertAndError.errorHandler(e, context, screen);
+      return false;
     } catch (e) {
-      AlertAndError.errorHandler(e, context);
+      AlertAndError.generalError(e, context, screen);
       return false;
     }
   }
