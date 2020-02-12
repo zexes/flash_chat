@@ -32,11 +32,6 @@ class _ChatScreenState extends State<ChatScreen> {
     isShowSticker = false;
   }
 
-  Future<bool> onBackPress() {
-    return AlertAndError.alertButtonCloseCurrentScreen(AlertType.warning,
-        context, "ARE YOU SURE ", "Do you want to close the curent screen");
-  }
-
   Future<bool> onBackPressEmoji() {
     if (isShowSticker) {
       setState(() {
@@ -61,82 +56,79 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: onBackPress,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: null,
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  Auth().signOut(context);
-                }),
-          ],
-          title: Text('⚡️Chat'),
-          backgroundColor: Colors.lightBlueAccent,
-        ),
-        body: SafeArea(
-          child: WillPopScope(
-            child: Stack(
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    MessagesStream(),
-                    Container(
-                      decoration: kMessageContainerDecoration,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Material(
-                            child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 1.0),
-                              child: IconButton(
-                                icon: Icon(Icons.face),
-                                onPressed: () {
-                                  setState(() {
-                                    isShowSticker = !isShowSticker;
-                                  });
-                                },
-                                color: Colors.blueGrey,
-                              ),
-                            ),
-                            color: Colors.white,
-                          ),
-                          Expanded(
-                            child: TextField(
-                              controller: messageTextController,
-                              onChanged: (value) {
-                                messageText = value;
+    return Scaffold(
+      appBar: AppBar(
+        leading: null,
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                Auth().signOut(context);
+              }),
+        ],
+        title: Text('⚡️Chat'),
+        backgroundColor: Color(0xFF4CAF50),
+      ),
+      body: SafeArea(
+        child: WillPopScope(
+          child: Stack(
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  MessagesStream(),
+                  Container(
+                    decoration: kMessageContainerDecoration,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Material(
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 1.0),
+                            child: IconButton(
+                              icon: Icon(Icons.face),
+                              onPressed: () {
+                                setState(() {
+                                  isShowSticker = !isShowSticker;
+                                });
                               },
-                              decoration: kMessageTextFieldDecoration,
+                              color: Colors.blueGrey,
                             ),
                           ),
-                          IconButton(
-                            icon: Icon(Icons.send),
-                            onPressed: () {
-                              print('am here');
-                              messageTextController.clear();
-                              _fireStore.collection('messages').add({
-                                'text': messageText,
-                                'sender': loggedInUser.email,
-                                'time': FieldValue.serverTimestamp(),
-                              });
+                          color: Colors.white,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: messageTextController,
+                            onChanged: (value) {
+                              messageText = value;
                             },
-                            color: Colors.lightBlueAccent,
+                            decoration: kMessageTextFieldDecoration,
                           ),
-                        ],
-                      ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.send),
+                          onPressed: () {
+                            print('am here');
+                            messageTextController.clear();
+                            _fireStore.collection('messages').add({
+                              'text': messageText,
+                              'sender': loggedInUser.email,
+                              'time': FieldValue.serverTimestamp(),
+                            });
+                          },
+                          color: Colors.lightBlueAccent,
+                        ),
+                      ],
                     ),
-                    (isShowSticker ? buildSticker() : Container()),
-                  ],
-                ),
-              ],
-            ),
-            onWillPop: onBackPressEmoji,
+                  ),
+                  (isShowSticker ? buildSticker() : Container()),
+                ],
+              ),
+            ],
           ),
+          onWillPop: onBackPressEmoji,
         ),
       ),
     );

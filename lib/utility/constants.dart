@@ -36,3 +36,6 @@ const kTextFieldDecoration = InputDecoration(
 
 const kLoginText = TextStyle(
     fontSize: 18.0, color: Colors.blueAccent, fontStyle: FontStyle.italic);
+
+const kSideMenu = TextStyle(
+    fontWeight: FontWeight.bold, color: Colors.lightBlueAccent, fontSize: 18.0);

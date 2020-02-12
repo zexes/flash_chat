@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flash_chat/screens/chat_screen.dart';
-import 'package:flash_chat/screens/login_screen.dart';
+import 'package:flash_chat/screens/home_screen.dart';
+import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -21,10 +21,10 @@ class Auth implements BaseAuth {
       );
       if (user != null) {
         if (user.user.isEmailVerified) {
-          Navigator.pushNamed(context, ChatScreen.id);
+          Navigator.pushNamed(context, HomeScreen.id);
         } else {
           AlertAndError.alertButton(AlertType.info, context, "VERIFY EMAIL",
-              "Verification mail sent to registered mail", LoginScreen.id);
+              "Verification mail sent to registered mail", screen);
         }
       }
       return true;
@@ -38,9 +38,9 @@ class Auth implements BaseAuth {
   }
 
   @override
-  void signOut(BuildContext context) {
-    _auth.signOut();
-    Navigator.pop(context, LoginScreen.id);
+  Future<void> signOut(BuildContext context) async {
+    Navigator.pushNamed(context, WelcomeScreen.id);
+    await _auth.signOut();
   }
 
   @override

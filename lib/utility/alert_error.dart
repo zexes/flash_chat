@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flash_chat/authentication/auth.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,14 +32,14 @@ class AlertAndError {
           context: context,
           type: alertType, //AlertType.warning,
           title: title, //"ARE YOU SURE",
-          desc: description, //"Do you want to close the curent screen",
+          desc: description, //"Do you want to close the current screen",
           buttons: [
             DialogButton(
               child: Text(
                 "YES",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () async => await Auth().signOut(context),
               color: Colors.red,
             ),
             DialogButton(
@@ -90,6 +91,10 @@ class AlertAndError {
         case 'ERROR_NETWORK_REQUEST_FAILED':
           alertButton(
               AlertType.error, context, 'Network error', e.message, screen);
+          break;
+        case 'ERROR_EMAIL_ALREADY_IN_USE':
+          alertButton(AlertType.error, context, 'Email Already in Use',
+              e.message, screen);
           break;
         default:
           alertButton(AlertType.error, context, 'Error', e.message, screen);
