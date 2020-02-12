@@ -46,7 +46,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
-                  email = value;
+                  email = value.trim();
                 },
                 decoration:
                     kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
