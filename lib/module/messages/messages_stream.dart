@@ -6,9 +6,9 @@ import 'messages_bubble.dart';
 
 class MessagesStream extends StatelessWidget {
   final Firestore fireStore;
-  final FirebaseUser loggedInUser;
+  final FirebaseUser user;
 
-  MessagesStream({this.fireStore, this.loggedInUser});
+  MessagesStream({this.fireStore, this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class MessagesStream extends StatelessWidget {
           final messageText = message.data['text'];
           final messageSender = message.data['sender'];
 
-          final currentUser = loggedInUser.email;
+          final currentUser = user.email;
 
           final messageBubble = MessageBubble(
             sender: messageSender,

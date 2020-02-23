@@ -93,7 +93,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       children: <Widget>[
                         MessagesStream(
                           fireStore: _fireStore,
-                          loggedInUser: loggedInUser,
+                          user: loggedInUser,
                         ),
                         Container(
                           decoration: kMessageContainerDecoration,
