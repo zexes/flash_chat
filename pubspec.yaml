@@ -12,12 +12,22 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   animated_text_kit: ^2.0.0
-  firebase_core: ^0.4.3+1
-  firebase_auth: ^0.15.3
-  cloud_firestore: ^0.13.0+1
+  firebase_core: ^0.4.4
+  firebase_auth: ^0.15.4
+  firebase_storage: ^3.1.1
+  cloud_firestore: ^0.13.3
   modal_progress_hud: ^0.1.3
   emoji_picker: ^0.1.0
   rflutter_alert: ^1.0.3
+
+  ##toast, cache data local, image pick and cache network image and parse date time
+  fluttertoast: ^3.1.3
+  shared_preferences: 0.5.6+2
+  image_picker: ^0.6.3+4
+  cached_network_image: 2.0.0
+  intl: ^0.16.1
+
+
 
 
 dev_dependencies:
