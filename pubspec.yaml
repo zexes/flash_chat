@@ -22,9 +22,9 @@ dependencies:
 
   ##toast, cache data local, image pick and cache network image and parse date time
   fluttertoast: ^3.1.3
-  shared_preferences: 0.5.6+2
+  shared_preferences: ^0.5.6+2
   image_picker: ^0.6.3+4
-  cached_network_image: 2.0.0
+  cached_network_image: ^2.0.0
   intl: ^0.16.1
 
 
